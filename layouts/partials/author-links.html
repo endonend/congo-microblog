@@ -1,16 +1,8 @@
-{{ with .Site.Author.links }}
   <div class="flex flex-wrap text-neutral-400 dark:text-neutral-500">
-    {{ range $links := . }}
-      {{ range $name, $url := $links }}
-        <a
-          class="px-1 transition-transform hover:scale-125 hover:text-primary-700 dark:hover:text-primary-400"
-          href="{{ $url }}"
-          target="_blank"
-          aria-label="{{ $name | title }}"
-          rel="me noopener noreferrer"
-          >{{ partial "icon.html" $name }}</a
-        >
-      {{ end }}
-    {{ end }}
+    <a aria-label="RSS" class="px-1 transition-transform hover:scale-125 hover:text-primary-700 dark:hover:text-primary-400" href="{{ .RSSLink }}"> RSS</a>
+    
+    {{ with .Site.Params.twitter_username }}, <a aria-label="Twitter" class="px-1 transition-transform hover:scale-125 hover:text-primary-700 dark:hover:text-primary-400" href="https://twitter.com/{{ . }}">Twitter</a>{{ end }}
+    {{ with .Site.Params.instagram_username }}, <a aria-label="Instagram" class="px-1 transition-transform hover:scale-125 hover:text-primary-700 dark:hover:text-primary-400" href="https://instagram.com/{{ . }}">Instagram</a>{{ end }}
+    {{ with .Site.Params.mastodon_url }}, <a aria-label="Mastodon" class="px-1 transition-transform hover:scale-125 hover:text-primary-700 dark:hover:text-primary-400" href="{{ . }}">Mastodon</a>{{ end }}
+    
   </div>
-{{ end }}

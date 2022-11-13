@@ -1,0 +1,13 @@
+<article class="max-w-full prose dark:prose-invert">
+{{ if .Title }}
+	<header>
+	  <h1>{{ .Title }}</h1>
+	</header>
+  <section>{{ .Summary }}</section>
+  <a href="{{ .RelPermalink }}" class="card-link u-url">Read More</a>
+  <small class="text-muted dt-published">Posted on: {{ .Date.Format "January 2, 2006" }}</small>
+ {{ else }}
+  <section>{{ .Content }}</section>
+  <small class="text-muted dt-published">Posted on: {{ .Date.Format "January 2, 2006" }}</small>
+ {{ end }}
+</article>

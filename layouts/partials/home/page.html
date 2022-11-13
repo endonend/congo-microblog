@@ -1,11 +1,23 @@
-<article class="max-w-full prose dark:prose-invert">
-  {{ with .Title }}
-    <header>
-      <h1>{{ . | emojify }}</h1>
-    </header>
-  {{ end }}
-  <section>{{ .Content | emojify }}</section>
-</article>
 <section>
-  {{ partial "recent-articles.html" . }}
+  {{ $paginator := .Paginate (where .Pages "Type" "post") 5 }}
+        {{ range $paginator.Pages }}
+            {{ partial "post-summary.html" . }}
+        {{ end }}
+      
+  {{ if gt $paginator.TotalPages 1 }}
+  <nav class="blog-pagination text-center" aria-label="Pagination">
+        {{ $pag := $.Paginator }}
+        {{ if or $pag.HasPrev $pag.HasNext }}
+          {{ if $pag.HasPrev }}
+            <a href="{{ $pag.Prev.URL }}" class="btn btn-outline-primary">← Newer Posts</a>
+          {{ end }}
+        <span class="page-number px-2">Page {{ $pag.PageNumber }} of {{ $pag.TotalPages }}</span>
+          {{ if $pag.HasNext }}
+            <a href="{{ $pag.Next.URL }}" class="btn btn-outline-primary">Older Posts →</a>
+          {{ end }}
+        {{ end }}
+      </nav>
+  {{ end }}<!---->
 </section>
+
+

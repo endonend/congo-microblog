@@ -132,6 +132,9 @@
   {{ with .Site.Params.instagram_username }}
       <link rel="me" href="https://instagram.com/{{ . }}" />
   {{ end }}
+  {{ with .Site.Params.mastodon_url }}
+      <link rel="me" href="{{ . }}" />
+  {{ end }}
   
   <link rel="authorization_endpoint" href="https://micro.blog/indieauth/auth" />
   <link rel="token_endpoint" href="https://micro.blog/indieauth/token" />
