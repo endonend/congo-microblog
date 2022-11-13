@@ -1,17 +1,10 @@
 {{- partial "partials/functions/warnings.html" .Site -}}
 <!DOCTYPE html>
 <html
-  lang="{{ with .Site.Params.isoCode | default (.Site.LanguageCode | default "en") }}
-    {{- . -}}
-  {{ end }}"
-  dir="{{ if .Site.Params.rtl | default false -}}
-    rtl
-  {{- else -}}
-    ltr
-  {{- end }}"
+  lang="en"
   class="scroll-smooth"
-  data-default-appearance="{{ .Site.Params.defaultAppearance | default "light" }}"
-  data-auto-appearance="{{ .Site.Params.autoSwitchAppearance | default "true" }}"
+  data-default-appearance="light"
+  data-auto-appearance="true" 
 >
   {{- partial "head.html" . -}}
   <body

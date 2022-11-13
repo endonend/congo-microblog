@@ -1,9 +1,10 @@
 <head>
   <meta charset="utf-8" />
-  {{ with .Site.Language.Params.htmlCode | default .Site.LanguageCode }}
-    <meta http-equiv="content-language" content="{{ . }}" />
-  {{ end }}
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta content="{{ .Site.Author.name }}" name="author">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="microblog-theme" content="Congo for Micro dot blog ">
+  <meta name="designer" content="Jason Dettbarn">
   <meta http-equiv="X-UA-Compatible" content="ie=edge" />
   {{/* Title */}}
   {{ if .IsHome -}}
@@ -13,6 +14,7 @@
     <title>{{ .Title | emojify }} &middot; {{ .Site.Title | emojify }}</title>
     <meta name="title" content="{{ .Title | emojify }} &middot; {{ .Site.Title | emojify }}" />
   {{- end }}
+  
   {{/* Metadata */}}
   {{ with .Site.Params.description -}}
     <meta name="description" content="{{ . }}" />
@@ -30,6 +32,7 @@
   {{ range .AlternativeOutputFormats -}}
     {{ printf `<link rel="%s" type="%s" href="%s" title="%s" />` .Rel .MediaType.Type .RelPermalink ($.Site.Title | emojify) | safeHTML }}
   {{ end -}}
+  
   {{/* Asset bundles */}}
   {{ $assets := newScratch }}
   {{ $cssScheme := resources.Get (printf "css/schemes/%s.css" (lower .Site.Params.colorScheme | default "congo")) }}
@@ -111,5 +114,36 @@
   {{/* Extend head - eg. for custom analytics scripts, etc. */}}
   {{ if templates.Exists "partials/extend-head.html" }}
     {{ partialCached "extend-head.html" .Site }}
+  {{ end }}
+  {{ if .RSSLink -}}
+      <link href="{{ .RSSLink }}" rel="alternate" type="application/rss+xml" title="{{ .Site.Title }}" />
+      <link href="{{ "podcast.xml" | absURL }}" rel="alternate" type="application/rss+xml" title="Podcast" />
+      <link rel="alternate" type="application/json" title="{{ .Site.Title }}" href="{{ "feed.json" | absURL }}" />
+      <link rel="EditURI" type="application/rsd+xml" href="{{ "rsd.xml" | absURL }}" />
+  {{ end -}}
+  
+  <link rel="me" href="https://micro.blog/{{ .Site.Author.username }}" />
+  {{ with .Site.Params.twitter_username }}
+      <link rel="me" href="https://twitter.com/{{ . }}" />
+  {{ end }}
+  {{ with .Site.Params.github_username }}
+      <link rel="me" href="https://github.com/{{ . }}" />
+  {{ end }}
+  {{ with .Site.Params.instagram_username }}
+      <link rel="me" href="https://instagram.com/{{ . }}" />
+  {{ end }}
+  
+  <link rel="authorization_endpoint" href="https://micro.blog/indieauth/auth" />
+  <link rel="token_endpoint" href="https://micro.blog/indieauth/token" />
+  <link rel="micropub" href="https://micro.blog/micropub" />
+  <link rel="microsub" href="https://micro.blog/microsub" />
+  <link rel="webmention" href="https://micro.blog/webmention" />
+  <link rel="subscribe" href="https://micro.blog/users/follow" />
+  
+  {{ range .Site.Params.plugins_css }}
+      <link rel="stylesheet" href="{{ . }}" />
+  {{ end }}
+  {{ range $filename := .Site.Params.plugins_html }}
+      {{ partial $filename $ }}
   {{ end }}
 </head>
